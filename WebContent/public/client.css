@@ -1,0 +1,148 @@
+a.linkTitle {
+    color: #0776A0;
+    text-decoration: none;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+a.linkTitle:hover {
+    color: #0B61A4;
+    text-decoration: none;
+}
+
+a.showComments{
+    color:#ffffff;
+    text-decoration:none;
+}
+
+a.showComments:hover {
+    color:#ffffff;
+    text-decoration:none;
+}
+
+.welcomeUser {
+    color: #999999;
+    float: right;
+}
+
+.welcomeLoggedIn {
+    margin-right: 10px;
+    text-align: right;
+    float: right;
+}
+.registerForm, .postLink {
+    background-color: #c0c0c0;
+    -webkit-border-radius: .5em;
+    -moz-border-radius: .5em;
+    border-radius: .5em;
+    margin-bottom: 20px;
+    background: -webkit-gradient(linear, left top, left bottom, from(#c0c0c0),
+    to(#efefef));
+    background: -moz-linear-gradient(top, #c0c0c0, #efefef);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#c0c0c0',
+    endColorstr='#efefef');
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.entry {
+    background-color: #c0c0c0;
+    -webkit-border-radius: .5em;
+    -moz-border-radius: .5em;
+    border-radius: .5em;
+    margin-bottom: 20px;
+    background: -webkit-gradient(linear, left top, left bottom, from(#c0c0c0),
+    to(#efefef));
+    background: -moz-linear-gradient(top, #c0c0c0, #efefef);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#c0c0c0',
+    endColorstr='#efefef');
+    padding-bottom: 5px;
+    padding-top: 20px;
+}
+
+.comment {
+    width: 80%;
+    margin: 0 auto;
+    background-color: #f4f4f4;
+    -webkit-border-radius: .5em;
+    -moz-border-radius: .5em;
+    border-radius: .5em;
+    margin-bottom: 10px;
+    background: -webkit-gradient(linear, left top, left bottom, from(#dfdfdf),
+    to(#f8f8f8));
+    background: -moz-linear-gradient(top, #dfdfdf, #f8f8f8);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf',
+    endColorstr='#f8f8f8');
+    padding-bottom: 5px;
+    padding-top: 10px;
+
+}
+
+.vote {
+    text-align: center;
+    float:left;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.errorArea {
+    display: none;
+}
+
+.errorMessage {
+    width: 60;
+    color: red;
+    float: left;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.warningSymbol {
+    margin-top: 5px;
+    float: left;
+}
+
+
+span.date {
+    float: right;
+    font-size: 10px;
+    padding-right: 10px;
+}
+
+.commentForm {
+    text-align: center;
+    width: 80%;
+    margin: 0 auto;
+}
+.nOfComments {
+    width: 80%;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+.inputComment {
+    width: 100%;
+}
+
+.sendComment {
+    margin-bottom: 10px;
+}
+
+.left {
+    text-align: left;
+    float:left;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.right {
+    text-align: left;
+    float:left;
+    margin-right: 10px;
+    margin-left: 50px;
+}
+
+textarea:focus, input:focus, button:focus{
+    outline: none;
+}
+

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+
+
+<html>
+<head>
+
+    <title>reddit Clone</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <!--    <link href="Libs/bootstrap/css/client.css" rel="stylesheet" media="screen">-->
+    <link href="Libs/bootstrap/css/client.css" rel="stylesheet">
+
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link href="client.css" rel="stylesheet">
+
+    <script src="Libs/doT/doT.js"></script>
+    <script src="Libs/jquery-2.0.3.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="Libs/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="core.js"></script>
+    <script src="dataService.js"></script>
+    <script src="init.js"></script>
+
+    <script id="entryTemplate" type="text/template">
+        <div id="link{{=it.id}}" class="clearfix entry">
+            <div id="linkVote{{=it.id}}"  class="vote">
+                <input type="image" src="img/arrow_up_green.png" class="voteLinkUp"><br />
+                <span id="linkRating{{=it.id}}"><b>{{=it.rating.value}}</b></span><br />
+                <input type="image" src="img/arrow_down_grey.png" class="voteLinkDown"><br />
+            </div>
+            <div id="linkContainer{{=it.id}}" class="linkContainer">
+                <span class="date">{{=it.createTimeDisplay}}</span>
+                <a href="{{=it.url}}" target="_blank" class="linkTitle">{{=it.title}}</a><br /><br />
+                <span><b>Author:</b> {{=it.author}}</span>
+            </div><br />
+            <div id="nOfComments{{=it.id}}"  class="nOfComments">
+                <img src="img/comments.png"> <span class="badge badge-info"><a id="showComments{{=it.id}}" class="showComments">{{=it.comments.length}} Comment(s)</a></span>
+
+            </div>
+            <div id="containComments{{=it.id}}" style="display: none">
+            <div id="InputComment{{=it.id}}" class="commentForm" style="display: none">
+                <textarea class="inputComment" id="commentText{{=it.id}}" rows="3" placeholder="Comment"></textarea><br />
+                <div id="comment-error{{=it.id}}" class="alert alert-error" style="display: none">Please enter a text!</div>
+                <input id="sendComment{{=it.id}}" type="button" value="Submit Comment" class="btn sendComment span4">
+            </div>
+            </div>
+        </div>
+    </script>
+
+    <script id="commentTemplate" type="text/template">
+        <div id="comment{{=it.id}}" class="clearfix comment">
+            <div id="commentVote{{=it.id}}" class="vote">
+                <input type="image" src="img/arrow_up_green.png"  class="voteCommentUp"><br />
+                <span id="commentRating{{=it.id}}"><b>{{=it.rating.value}}</b></span><br />
+                <input type="image" src="img/arrow_down_grey.png" class="voteCommentDown">
+            </div>
+            <div id="commentContainer{{=it.id}}" class="commentContainer">
+                <span class="date">{{=it.createTimeDisplay}}</span>
+                <span><b>{{=it.author}}</b></span><br />
+                <span>{{=it.text}}</span>
+
+            </div>
+        </div>
+    </script>
+
+</head>
+<script src="ui.js"></script>
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <button type="button" class="btn btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="brand" href="#">reddit Clone</a>
+            <div id="errorArea" class="errorArea">
+                <img id="warningSymbol" src="img/warning.png" class="warningSymbol">
+                <span id="errorMessage" class="errorMessage"></span>
+            </div>
+
+
+            <div class="nav-collapse collapse">
+
+
+
+
+                <div id="loginForm" class="navbar-form pull-right">
+                    <input id="username" class="span2" type="text" placeholder="Username">
+                    <input id="password" class="span2" type="password" placeholder="Password">
+                    <input id="signin" type="button" value="Sign in" class="btn">
+                    <input id="showRegister" type="button" value="Register" class="btn">
+                </div>
+                <div id="welcomeForm" class="pull-right" style="display: none">
+                    <div class="nav">
+                        <button id="postNew" class="btn" style="display: none">Post Link</button>
+                    </div>
+                    <div class="welcomeLoggedIn">
+                        <span id="welcomeUser" class="welcomeUser"></span></br>
+                        <!--<button id="logout" class="btn">Logout</button> -->
+                        <a id="logout" class="logout">Logout</a>
+                    </div>
+
+                </div>
+                <div id="newUser" class="pull-right" style="display: none">
+                    <span id="welcomeNewUser" class="welcomeUser"></span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div id="registerForm" class="container registerForm" style="display: none">
+    <div class="left">
+        <h2>Create a new User Account</h2>
+        <h4>You only need a username and a password!</h4>
+    </div>
+    <div class="right">
+        <input id="registerUsername" class="span2" type="text" placeholder="Username"><br />
+        <input id="registerPassword" class="span2" type="password" placeholder="Password"><br />
+        <input id="repeatPassword" class="span2" type="password" placeholder="Repeat Password"><br />
+        <button id="register" class="btn">Register</button>
+        <button id="closeRegister" class="btn">Close</button>
+        <div id="register-error" class="alert alert-error" style="display: none"></div>
+    </div>
+
+</div>
+<div id="postLink" class="container postLink" style="display: none">
+    <div class="left">
+        <h2>Submit a new Link</h2>
+        <h4>The community is waiting for it!</h4>
+    </div>
+    <div class="right">
+        <input id="linkTitle" class="span2" type="text" placeholder="Title"><br />
+        <input id="linkURL" class="span2" type="test" placeholder="URL"><br />
+        <button id="submitLink" class="btn">Submit</button>
+        <button id="cancelPost" class="btn">Cancel</button>
+        <div id="submitLink-error" class="alert alert-error" style="display: none"></div>
+    </div>
+
+</div>
+<div id="containEntries" class="containEntries container">
+</div>
+
+</body>
+</html>
